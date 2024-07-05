@@ -10,6 +10,7 @@ import {
   HiOutlineTrash,
 } from 'react-icons/hi2';
 import Modal from '../../ui/Modal';
+import ConfirmDelete from '../../ui/ConfirmDelete';
 
 const TableRow = styled.div`
   display: grid;
@@ -106,9 +107,19 @@ function CabinRow({ cabin }) {
           <Modal.Window name="edit">
             <CreateCabinForm cabinToEdit={cabin} />
           </Modal.Window>
-          <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
-            <HiOutlineTrash />
-          </button>
+
+          <Modal.Open opens="delete">
+            <button>
+              <HiOutlineTrash />
+            </button>
+          </Modal.Open>
+          <Modal.Window name="delete">
+            <ConfirmDelete
+              onConfirm={() => deleteCabin(cabinId)}
+              disabled={isDeleting}
+              resourceName={name}
+            />
+          </Modal.Window>
         </Modal>
       </div>
     </TableRow>
