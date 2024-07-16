@@ -3,9 +3,10 @@ import Table from '../../ui/Table';
 import Menus from '../../ui/Menus';
 import Empty from '../../ui/Empty';
 import { useBookings } from './useBookings';
+import Pagination from '../../ui/Pagination';
 
 function BookingTable() {
-  const { isLoading, error, bookings = {} } = useBookings();
+  const { count, isLoading, error, bookings = {} } = useBookings();
 
   if (!bookings.length) return <Empty resource="Bookings" />;
 
@@ -27,6 +28,9 @@ function BookingTable() {
             <BookingRow key={booking.id} booking={booking} />
           )}
         />
+        <Table.Footer>
+          <Pagination count={25} />
+        </Table.Footer>
       </Table>
     </Menus>
   );
