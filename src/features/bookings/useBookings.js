@@ -21,14 +21,18 @@ export function useBookings() {
           value: filterValue,
         };
 
+  // Pagination
+
+  const page = !searchParams.get('page') ? 1 : Number(searchParams.get('page'));
+
   const {
-    data: bookings,
+    data: { data: bookings, count } = {},
     error,
     isLoading,
   } = useQuery({
-    queryKey: ['bookings', filter, sortBy],
-    queryFn: () => getBookings({ filter, sortBy }),
+    queryKey: ['bookings', filter, sortBy, page],
+    queryFn: () => getBookings({ filter, sortBy, page }),
   });
 
-  return { bookings, error, isLoading };
+  return { count, bookings, error, isLoading };
 }
